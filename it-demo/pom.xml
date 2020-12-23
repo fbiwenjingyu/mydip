@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.bs.it</groupId>
+    <artifactId>it-boot</artifactId>
+    <version>2.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>it-demo</artifactId>
+  <packaging>jar</packaging>
+  <name>it-demo</name>
+  
+   <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<dip.version>2.0-SNAPSHOT</dip.version>
+		<bpm.version>2.0-SNAPSHOT</bpm.version>
+	</properties>
+	
+	<dependencies>
+
+		<dependency>
+            <groupId>com.bs.platform</groupId>
+            <artifactId>dip-spring-boot-starter-bizform</artifactId>
+            <version>${dip.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bs.platform</groupId>
+            <artifactId>dip-spring-boot-starter-bpm</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+         
+	</dependencies>
+</project>

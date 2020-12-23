@@ -1,0 +1,172 @@
+swagger:
+  enable: true
+server:
+  port: 8081
+  servlet:
+    context-path: /newdip/
+    session:
+      timeout: -1
+
+security:
+  oauth2:
+    client:
+      client-id: it-customer2
+      client-secret: it-customer2-8888
+      redirect-uri: http://10.17.113.106:9000
+      user-authorization-uri: http://10.17.113.105:6001/oauth/authorize
+      access-token-uri: http://10.17.113.105:6001/oauth/token  
+      logout-uri: http://10.17.113.105:6001/loginOut
+      response_type: code
+    resource:
+      jwt:
+        key-uri: http://10.17.113.105:6001/oauth/token_key
+        key-value: dev
+#需要rocketmq时开启如下配置
+#rocketmq:
+#  name-server: 192.168.1.7:9876
+#  producer:
+#    group: boot_producer_group    
+spring:
+  servlet:
+    multipart:
+      # 启用
+      enabled: true
+      # 上传文件单个限制
+      max-file-size: 100MB
+      # 总限制
+      max-request-size: 100MB
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+      druid: #以下是全局默认值，可以全局更改
+        #监控统计拦截的filters
+        filters: stat,wall
+        #配置初始化大小/最小/最大
+        initial-size: 1
+        min-idle: 1
+        max-active: 20
+        #获取连接等待超时时间
+        max-wait: 60000
+        #间隔多久进行一次检测，检测需要关闭的空闲连接
+        time-between-eviction-runs-millis: 60000
+        #一个连接在池中最小生存的时间
+        min-evictable-idle-time-millis: 300000
+        validation-query: select 1 from dual
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        stat:
+          merge-sql: true
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      datasource:
+        master:
+          url: jdbc:oracle:thin:@10.22.12.15:1521/sadevdb
+          username: devAthena
+          password: devAthena_plt2020
+          driver-class-name: oracle.jdbc.driver.OracleDriver
+        slave:
+          url: jdbc:oracle:thin:@10.22.12.15:1521/sadevdb
+          username: devAthena
+          password: devAthena_plt2020
+          driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    #enabled: true
+    #host: 127.0.0.1
+    #host: 10.17.119.200
+    #port: 6379
+    #password: 123465
+    #过期时间（秒）
+    expirationSecond: 3600
+    cluster:
+      nodes: 10.22.15.121:6379,10.22.15.123:6379,10.22.15.124:6379,10.22.15.121:6380,10.22.15.123:6380,10.22.15.124:6380
+      max-redirects: 3
+    jedis:
+      pool:
+        max-idle: 16
+        max-active: 32
+        min-idle: 8
+
+mybatis-plus:
+  global-config:
+    #刷新mapper 调试神器
+    refresh-mapper: true
+
+#日志配置
+logging:
+  config: classpath:dev/logback.xml
+
+auth:
+  pwdDefault: '123456'
+  #是否开启验证码
+  captchaEnable: true
+  #0使用jwt 1使用redis
+  type: 1
+  #过期时间（秒）
+  expirationSecond: 86400
+  jwt:
+    secret: 'ggs6fad5as6d5sa#dddfg2ddd$fdd$d@dd'
+
+
+#上传配置
+upload:
+ #文件上传模式local or ftp
+ mode: local
+ sizeLimit: 104857600
+ filesBasePath: 'files\'
+ separator: '\'
+ #uploadUrl: '\\CAOHONGHUI-PC\dipFile'
+ uploadUrl: '\\D:\\dipFile'
+
+#ftp配置
+ftp:
+ host: 10.22.13.66
+ port: 21
+ username: BPMadmin
+ password: Aa123456
+ path: ymtc/		 
+
+#webservice接入esb相关配置   
+esb:
+ esbUrl: http://10.18.232.35:7080/esb-auth/standardRequest   
+ rpcEsbUrl: http://10.18.232.35:7080/esb/m2 
+ rpcEsbUrl4Sap: http://10.18.232.35:7080/esb/sap/m2
+ SourceSystem: platform
+ TargetSystem: coframe
+ Token: c61a6cf028b34466c50b07fdab382d45
+ #appcode: NEWDIP
+
+#系统配置
+sysconfig:
+ appcode: NEWDIP
+ 
+#bps接口url相关配置
+bps: 
+ bpsip: http://10.22.13.67:8080
+ 
+ 
+#webservice接口地址配置
+webservice:
+ url: http://10.22.15.125:8080/
+
+#email接口地址配置
+email:
+ url: http://10.22.15.159:8600/emailManageSys/MisWorkItemManagerService  
+ 
+#sms接口地址配置
+sms:
+ url: http://10.18.220.119:8080/service/SmsService 
+ 
+#yoyo接口地址配置
+yoyo:
+ yoyoRandomUrl: http://10.22.15.158:8080/yoyoServeApi/yoyoserve/com.mis.mobile.yoyoserve.YoyoServeAPI.sendCode.biz.ext
+ 
